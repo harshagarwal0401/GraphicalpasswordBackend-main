@@ -5,7 +5,7 @@ const cors = require("cors");
 require("dotenv").config();
 const mongoose = require("mongoose");
 const userDB = require("./model.js");
-const { fetch } = require("node-fetch");
+const  fetch  = require("node-fetch");
 
 let password = "";
 
