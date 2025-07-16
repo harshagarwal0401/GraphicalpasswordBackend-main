@@ -1,11 +1,14 @@
 const express = require("express");
 const app = express();
-const { urlencoded } = require("express");
 const cors = require("cors");
 require("dotenv").config();
 const mongoose = require("mongoose");
 const userDB = require("./model.js");
-const  fetch  = require("node-fetch");
+const fetch = require("node-fetch");
+
+global.fetch = fetch;
+
+console.log("🔁 Server is starting...");
 
 let password = "";
 
@@ -13,12 +16,8 @@ const database = () => {
   return mongoose.connect(process.env.MONGO_URI);
 };
 
-global.fetch = fetch;
-
-// app.use(express.static("../GraphicalPasswordFrontEnd/build"))
-
 app.use(express.json({ limit: "50mb" }));
-app.use(urlencoded({ extended: false, limit: "50mb" }));
+app.use(express.urlencoded({ extended: false, limit: "50mb" }));
 
 app.use(
   cors({
@@ -28,8 +27,8 @@ app.use(
 );
 
 app.get("/", (req, res) => {
-  res.send("welcoe to node server");
-})
+  res.send("welcome to node server");
+});
 
 app.post("/signup", async (req, res) => {
   const { theme, email, links, id } = req.body;
@@ -58,8 +57,7 @@ app.post("/login", async (req, res) => {
   const user = await userDB.find({ email: email });
   if (user.length === 0) {
     res.status(404).send("NO USER FOUND");
-  }
-  else {
+  } else {
     const userTheme = user[0].theme;
     if (userTheme === theme) {
       const Ids = user[0].allId;
@@ -88,12 +86,15 @@ const port = process.env.PORT || 5000;
 
 const connectDatabase = async () => {
   try {
+    console.log("⏳ Connecting to MongoDB...");
     await database();
+    console.log("✅ MongoDB connected");
+
     app.listen(port, () => {
-      console.log(`server listening to port ${port}`);
+      console.log(`🚀 Server is listening on port ${port}`);
     });
   } catch (error) {
-    console.log(error);
+    console.error("❌ Error during startup:", error);
   }
 };
 
