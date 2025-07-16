@@ -15,7 +15,7 @@ the human brain is better at recognizing and remembering images than text.
 - **Multi-factor authentication:** Graphical passwords could be used as part of a multi-factor authentication system, along with other methods such as SMS codes or hardware tokens, to provide an extra layer of security.
 
 
-## Frontend repo : https://github.com/1010varun/GraphicalPasswordFrontEnd
+## Frontend repo : https://github.com/harshagarwal0401/GraphicalpasswordFrontend
 
 
 
